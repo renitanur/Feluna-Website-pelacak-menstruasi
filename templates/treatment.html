@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Treatment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #a3bffa, #e494c2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 600px;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .menu-item:hover {
+      transform: scale(1.1);
+    }
+    .menu-icon {
+      width: 80px;
+      height: 80px;
+      background-color: #eee;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 36px;
+      color: #333;
+    }
+    .menu-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at top left, #ff758c, #ff7eb3);
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      border: 2px solid white;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .back-button:hover {
+      transform: rotate(-15deg) scale(1.2);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Tombol Kembali -->
+  <button class="back-button" onclick="history.back()">⮌</button>
+
+  <div class="container">
+    <h1>Treatments</h1>
+    <div class="menu">
+      <div class="menu-item">
+        <a href="petunjuk_olahnafas" style="text-decoration: none; color: inherit;">
+          <div class="menu-icon">🌀</div>
+          <div class="menu-text">Olah Nafas</div>
+        </a>
+      </div>
+      <hr class="divider" style="width: 80%; border: 1px solid #ccc;">
+      <div class="menu-item">
+        <a href="petunjuk_peregangan" style="text-decoration: none; color: inherit;">
+          <div class="menu-icon">🤸</div>
+          <div class="menu-text">Peregangan</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

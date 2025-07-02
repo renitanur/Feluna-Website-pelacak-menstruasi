@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #a3bffa, #e494c2);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Feedback Form */
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            resize: none;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #6c5ce7;
+            outline: none;
+        }
+
+        button {
+            background-color: #6c5ce7;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            width: 48%; /* Set width to 48% for both buttons */
+        }
+
+        button:hover {
+            background-color: #5a4fe5;
+        }
+
+        button:active {
+            background-color: #4e44d7;
+            transform: scale(0.98);
+        }
+
+        /* Wrapper for buttons */
+        .button-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 4%; /* Space between buttons */
+            margin-top: 15px;
+        }
+
+        /* Feedback List */
+        ul {
+            list-style-type: none;
+            margin-top: 20px;
+            padding: 0;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        li {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        li strong {
+            color: #6c5ce7;
+        }
+
+        li time {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            form, ul {
+                width: 90%;
+            }
+
+            /* Adjust buttons for smaller screens */
+            .button-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            button {
+                width: 100%; /* Buttons take full width on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Masukkan Ulasan Anda</h1>
+    <form method="POST">
+        <textarea name="feedback" placeholder="Tuliskan ulasan anda mengenai website ini..." required></textarea>
+        <div class="button-wrapper">
+            <button type="submit">Kirim Feedback</button>
+            <button type="button" onclick="window.location.href='index';">Kembali ke Halaman Sebelumnya</button>
+        </div>
+    </form>
+
+    <h2>Feedback yang Diterima</h2>
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.username }}</strong>: {{ review.content }}
+                    {% if review.created_at %}
+                        <time>Ditulis pada: {{ review.created_at }}</time>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Belum ada feedback.</p>
+    {% endif %}
+</body>
+</html>

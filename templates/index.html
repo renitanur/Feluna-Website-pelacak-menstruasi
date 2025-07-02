@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Feluna App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #a3bffa, #e494c2);
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #aca4e4;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 8;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            flex: 1;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            background-color: #6c5ce7;
+            color: #fff;
+            border-radius: 30px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #5a4fe5;
+            transform: translateY(-3px);
+        }
+
+        .button:active {
+            background-color: #4e44d7;
+        }
+
+        .logo {
+            width: 300px;
+            height: auto;
+            margin-top: 120px;
+        }
+
+        .profile {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f0f0f0;
+        }
+
+        .feedback-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #6c5ce7;
+            color: #fff;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .feedback-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="nav-links">
+            <a href="{{ url_for('tracking') }}" class="button">Tracking</a>
+            <a href="{{ url_for('treatment') }}" class="button">Treatments</a>
+        </div>
+
+        <div class="profile" onclick="toggleDropdown()">
+            <img src="{{ url_for('static', filename='images/profil.jpg') }}" alt="Profile Icon" class="profile-img">
+            
+            <!-- Dropdown Menu -->
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="{{ url_for('profil') }}" class="d-flex align-items-center">
+                    <i class="fas fa-user me-2"></i> Profile Pengguna
+                </a>
+        
+                <a href="{{ url_for('feedback') }}" class="d-flex align-items-center">
+                    <i class="fas fa-envelope"></i> Umpan Balik
+                </a>                                           
+        
+                <a href="/" onclick="logout()" class="d-flex">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <img src="{{ url_for('static', filename='images/000.png') }}" alt="Feluna Logo" class="logo">
+
+    <a href="{{ url_for('chatbot') }}" class="feedback-icon">
+        <i class="fas fa-comment-alt"></i>
+    </a>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function logout() {
+            alert("Logging out...");
+        }
+    </script>
+</body>
+
+</html>

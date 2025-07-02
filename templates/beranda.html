@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Siklus Menstruasi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            color: #333;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e796da;
+            padding: 15px 30px;
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .navbar h1 {
+            font-size: 1.5em;
+        }
+
+        .navbar .btn-login {
+            background-color: #fbc2eb;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .btn-login:hover {
+            background-color: #e796da;
+        }
+
+        .navbar .logo img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #ecc5e1, #c2d4f7); 
+            border-radius: 12px; 
+            padding: 30px 20px; 
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+            max-width: 1400px;
+            margin: 0 auto; 
+            text-align: center; 
+            margin-top: 20px;
+        }
+
+        .highlight-title {
+            font-size: 3em;
+            font-weight: 700;
+            color: #f854a4; 
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(243, 240, 240, 0.2); 
+        }
+
+        .highlight-desc {
+            font-size: 1.2em;
+            color: #333333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .highlight-icon {
+            font-size: 3.5em;
+            color: #e96da8;
+            margin-top: 15px;
+        }
+
+
+        .feature-section {
+            margin: 30px;
+        }
+
+        .feature-section h2 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .feature-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card i {
+            font-size: 2em;
+            color: #ee76da;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .feature-card p {
+            font-size: 1rem; 
+            color: #555;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .feature-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img src="static/images/Feluna-Logo.png" alt="Logo Feluna">
+        </div>
+        <button class="btn-login" onclick="window.location.href='/login'">Masuk</button>
+    </div>
+
+    <div class="hero-section">
+        <div class="highlight-box">
+            <h1 class="highlight-title">Kelola kesehatan menstruasi Anda!</h1>
+            <p class="highlight-desc">
+                Ubah pengalaman menstruasi dengan aplikasi kami! Pantau siklus, terapi relaksasi untuk mengurangi nyeri dan gejala lainnya, dan 
+                nikmati hidup lebih seimbang.</p>
+            <div class="highlight-icon">
+                <i class="fas fa-spa"></i>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="feature-section">
+        <h2>Fitur Unggulan</h2>
+        <div class="feature-cards">
+            <div class="feature-card">
+                <i class="fas fa-calendar-day"></i>
+                <h3>Tracking</h3>
+                <p>Kelola siklus menstruasi Anda dengan mudah, sehingga dapat menjaga kesehatan tubuh lebih baik.</p>
+              </div>
+              
+            <div class="feature-card">
+                <i class="fas fa-child"></i>
+                <h3>Treatments</h3>
+                <p>Rasakan manfaat dari kombinasi olah nafas dan peregangan untuk membantu relaksasi dan keseimbangan tubuh.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-comments"></i>
+                <h3>Chatbot</h3>
+            <p>Dapatkan saran dan informasi terkait menstruasi melalui konsultasi dengan profesional.</p>
+            </div>
+
+            <div class="feature-card">
+                <i class="fas fa-download"></i>
+                <h3>
+                <img src="static/images/QRCode1.png" alt="QR Code untuk unduh aplikasi" style="width: 150px;">
+                <a href="https://example.com/download">Download aplikasi di sini</a></h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

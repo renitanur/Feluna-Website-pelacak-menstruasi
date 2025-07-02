@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petunjuk Peregangan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #0077b6;
+            text-align: center;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        ol {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a.button {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #0077b6;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        a.button:hover {
+            background-color: #005f8b;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at top left, #ff758c, #ff7eb3);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: rotate(-15deg) scale(1.2);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Kembali -->
+    <button class="back-button" onclick="history.back()">⮌</button>
+
+    <div class="container">
+        <h1>Petunjuk Peregangan Pose</h1>
+        <p>Ikuti langkah-langkah berikut untuk memulai latihan peregangan:</p>
+        <ol>
+            <li>Cari tempat yang nyaman dan tenang dengan ruang yang cukup untuk bergerak.</li>
+            <li>Siapkan matras sebagai alas agar badan tetap nyaman.</li>
+            <li>Klik tombol <strong>"Mulai"</strong> untuk masuk ke halaman peregangan.</li>
+            <li>Pilih salah satu pose peregangan yang tersedia.</li>
+            <li>Setelah memilih pose, klik tombol <strong>"Aktifkan Kamera"</strong> untuk memulai deteksi pose.</li>
+            <li>Ikuti gerakan sesuai dengan gambar atau panduan yang ditampilkan.</li>
+            <li>Sistem akan mendeteksi apakah gerakan Anda sesuai dengan pose yang dipilih. Jika benar, Anda akan menerima notifikasi <strong>"Selected"</strong>.</li>
+            <li>Anda dapat memilih pose lain atau mengulangi pose yang sama sesuai keinginan.</li>
+        </ol>
+        <p><strong>Catatan:</strong> Pastikan tubuh Anda terlihat jelas oleh kamera, dan ruangan memiliki pencahayaan yang cukup. Jika merasa lelah atau tidak nyaman, segera berhenti dan istirahat.</p>
+        <a href="{{ url_for('peregangan') }}" class="button">Mulai</a>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olah Nafas</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #a18cd1, #fbc2eb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            background: linear-gradient(to bottom, #a18cd1, #fbc2eb);
+            border-radius: 8px;
+            width: 600px;
+            padding: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .graph {
+            display: flex;
+            justify-content: center;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        svg {
+            width: 80%;
+            height: auto;
+        }
+
+        .slider span {
+            font-size: 15px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .stage-indicator {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 8px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 16px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+
+        button.start {
+            background: #ff6f61;
+        }
+
+        button.finish {
+            background: #ff6f61;
+        }
+
+        button.continue {
+            background: #4caf50;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: radial-gradient(circle at top left, #ff758c, #ff7eb3);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: rotate(-15deg) scale(1.2);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-input {
+            margin: 16px 0;
+        }
+
+        input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Kembali -->
+    <button class="back-button" onclick="history.back()">⮌</button>
+
+    <div class="container">
+        <header>
+            <h1>Olah Nafas</h1>
+        </header>
+        <div class="time-input">
+            <label for="time">Masukkan durasi (menit): </label>
+            <input type="number" id="time" min="1" value="10">
+        </div>
+        <div class="graph">
+            <svg id="graph" viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
+                <polyline id="path" points="0,50 20,0 40,50 80,50" stroke="blue" stroke-width="2" fill="none"/>
+                <circle id="moving-dot" cx="0" cy="50" r="3" fill="red" />
+            </svg>
+        </div>
+        <div class="slider">
+            <span id="timer">00:00</span>
+            <div class="stage-indicator" id="stage-indicator">TARIK</div>
+        </div>
+        <div class="buttons">
+            <button class="start">START</button>
+            <button class="finish" id="finish-button">FINISH</button>
+        </div>
+    </div>
+
+    <script>
+        const startButton = document.querySelector(".start");
+        const finishButton = document.getElementById("finish-button");
+        const movingDot = document.getElementById("moving-dot");
+        const timerDisplay = document.getElementById("timer");
+        const stageIndicator = document.getElementById("stage-indicator");
+        const path = document.getElementById("path");
+        const timeInput = document.getElementById("time");
+        const totalLength = path.getTotalLength();
+
+        let timer = 0;
+        let stage = 0;
+        let animationFrame;
+        let interval;
+        let totalDuration;
+        let isPaused = false;
+        let lastTimerValue = 0; 
+        let lastStage = 0; 
+        let stageProgress = 0; 
+
+        const stages = ["TARIK", "HEMBUSKAN", "TAHAN"];
+        const stageDurations = [3, 3, 3];
+        const pauseDuration = 1000;
+
+        const sounds = {
+            TARIK: new Audio('/static/sound/aba-aba.mp3'),
+            TAHAN: new Audio('/static/sound/aba-aba.mp3'),
+            HEMBUSKAN: new Audio('/static/sound/aba-aba.mp3')
+        };
+
+        const instrumentSound = new Audio('/static/sound/sound_meditasi.mp3');
+
+        function updateTimer() {
+            const minutes = Math.floor(timer / 60);
+            const seconds = timer % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        }
+
+        function moveDot(stageProgress) {
+            const stageLength = totalLength / 3;
+            const startPoint = stage * stageLength;
+            const point = path.getPointAtLength(startPoint + stageProgress * stageLength);
+            movingDot.setAttribute("cx", point.x);
+            movingDot.setAttribute("cy", point.y);
+        }
+
+        function startStage() {
+            stageProgress = 0; // Reset progress setiap kali mulai stage
+            const duration = stageDurations[stage];
+
+            sounds[stages[stage]].play();
+
+            function animate() {
+                if (stageProgress < 1) {
+                    stageProgress += 1 / (duration * 60);
+                    moveDot(stageProgress);
+                    animationFrame = requestAnimationFrame(animate);
+                } else {
+                    cancelAnimationFrame(animationFrame);
+                    if (timer > 0) {
+                        stage = (stage + 1) % 3;
+                        stageIndicator.textContent = stages[stage];
+                        setTimeout(() => startStage(), pauseDuration);
+                    }
+                }
+            }
+
+            animate();
+        }
+
+        function pauseActivity() {
+            clearInterval(interval);
+            cancelAnimationFrame(animationFrame);
+            instrumentSound.pause();
+            lastTimerValue = timer; 
+            lastStage = stage; 
+            stageProgress = 0; 
+            isPaused = true;
+        }
+
+        function resumeActivity() {
+            isPaused = false;
+            timer = lastTimerValue; 
+            stage = lastStage; 
+            startStage(); 
+
+            interval = setInterval(() => {
+                if (timer > 0) {
+                    timer--;
+                    updateTimer();
+                } else {
+                    clearInterval(interval);
+                    cancelAnimationFrame(animationFrame);
+                    alert("Latihan selesai!");
+                }
+            }, 1000);
+        }
+
+        startButton.addEventListener("click", () => {
+            instrumentSound.play();
+
+            timer = parseInt(timeInput.value) * 60;
+            totalDuration = timer;
+            stage = 0;
+            stageIndicator.textContent = stages[stage];
+            timerDisplay.textContent = "00:00";
+
+            interval = setInterval(() => {
+                if (timer > 0) {
+                    timer--;
+                    updateTimer();
+                } else {
+                    clearInterval(interval);
+                    cancelAnimationFrame(animationFrame);
+                    alert("Latihan selesai!");
+                }
+            }, 1000);
+
+            startStage();
+        });
+
+        finishButton.addEventListener("click", () => {
+            if (!isPaused) {
+                clearInterval(interval);            
+                cancelAnimationFrame(animationFrame); 
+                instrumentSound.pause();             
+                sounds.TARIK.pause();                
+                sounds.HEMBUSKAN.pause();            
+                sounds.TAHAN.pause();                
+
+                timer = 0;                           
+                stage = 0;                           
+                stageIndicator.textContent = "TARIK"; 
+                timerDisplay.textContent = "00:00";   
+                moveDot(0);                          
+
+                isPaused = true; 
+            }
+        });
+    </script>
+</body>
+</html>

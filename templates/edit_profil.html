@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubah Profil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button {
+            background: #ff7f7f;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #ff6161;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .back-button:hover {
+            transform: rotate(-15deg) scale(1.2);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="history.back()">⮌</button>
+
+    <div class="form-container">
+        <h1>Ubah Profil</h1>
+        <form action="{{ url_for('edit_profil') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="birthDate">Tanggal Lahir</label>
+                <input type="date" id="birthDate" name="birthDate" value="{{ user.birthDate }}">
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Jenis Kelamin</label>
+                <select id="gender" name="gender">
+                    <option value="Perempuan" {% if user.gender == 'Perempuan' %}selected{% endif %}>Perempuan</option>
+                    <option value="Laki-Laki" {% if user.gender == 'Laki-Laki' %}selected{% endif %}>Laki-Laki</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Nomor Telepon</label>
+                <input type="text" id="phone" name="phone" value="{{ user.phone }}">
+            </div>
+            <button type="submit" class="button">Simpan</button>
+        </form>
+    </div>
+</body>
+</html>

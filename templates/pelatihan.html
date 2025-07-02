@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelatihan Pose</title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(135deg, #c3d0eb, #6357e7);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        /* Tombol Kembali */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            color: #fff;
+            background: linear-gradient(135deg, #a3bffa, #7f78d2);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #732d91, #8a3ab9);
+            transform: scale(1.1);
+        }
+
+        .pose-container {
+            display: inline-block;
+            position: relative;
+            width: 80%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background: #a3bffa;
+            margin-bottom: 10px;
+        }
+
+        .pose-image {
+            width: 85%;
+            height: 85%;
+            object-fit: cover;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        #video-container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        #video {
+            width: 80%;
+            max-width: 1000px;
+            border-radius: 8px;
+            border: 5px solid #4CAF50; 
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); 
+        }
+
+        .camera-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .camera-btn:active {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Tombol Kembali -->
+    <button class="back-button" onclick="history.back()">⮌</button>
+
+    <h2>Pelatihan Pose</h2>
+
+    <div class="pose-container" id="pose-container">
+        <img id="selected-pose-img" class="pose-image" src="" alt="Pose yang Dipilih">
+    </div>
+
+    <div id="video-container">
+        <video id="video" autoplay></video>
+    </div>
+
+    <button class="camera-btn" onclick="startCamera()">Aktifkan Kamera</button>
+
+    <script>
+        const selectedPose = localStorage.getItem('selectedPose');
+
+        if (selectedPose) {
+            const poseImage = document.getElementById('selected-pose-img');
+            poseImage.src = "{{ url_for('static', filename='images/')}}" + selectedPose;
+    
+            const poseContainer = document.getElementById('pose-container');
+            // Menghapus background image jika sudah ada gambar
+            poseContainer.style.backgroundImage = ""; // Menghapus background gambar sebelumnya
+        }
+
+        function startCamera() {
+            // Mengakses kamera perangkat
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    const video = document.getElementById('video');
+                    video.srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error("Error accessing the camera: ", error);
+                    alert("Tidak dapat mengakses kamera. Pastikan izin kamera sudah diberikan.");
+                });
+        }
+    </script>
+</body>
+</html>
